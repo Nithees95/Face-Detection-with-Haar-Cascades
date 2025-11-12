@@ -53,3 +53,54 @@ iv) Perform face detection with label in real-time video from webcam.
 - Step 4: Display the video frame with rectangles around detected faces  
 - Step 5: Exit loop and close windows when ESC key (key code 27) is pressed  
 - Step 6: Release video capture and destroy all OpenCV windows  
+## Program
+```
+DEVELOPED BY : NITHEESH YEGAVINTI 
+REG :212224040370
+```
+```
+
+import cv2
+import matplotlib.pyplot as plt
+# Load Haar cascade
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+
+# Read the image
+image = cv2.imread('1.jpg')
+
+# Check if image was loaded
+if image is None:
+    print("Error: Image not found.")
+else:
+    # Convert to grayscale
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # Detect faces
+    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5)
+
+    # Draw rectangles
+    for (x, y, w, h) in faces:
+        cv2.rectangle(image, (x, y), (x + w, y + h), (255, 0, 0), 2)
+
+    # Get screen resolution
+    screen_res = 1920, 1080  # You can change this based on your screen
+    scale_width = screen_res[0] / image.shape[1]
+    scale_height = screen_res[1] / image.shape[0]
+    scale = min(scale_width, scale_height)
+
+    window_width = int(image.shape[1] * scale)
+    window_height = int(image.shape[0] * scale)
+
+    # Resize image
+    resized_image = cv2.resize(image, (window_width, window_height))
+
+    # Show image
+       plt.imshow(image)
+       plt.show()
+
+    # Note: cv2.waitKey(0) and cv2.destroyAllWindows() are not needed with cv2_imshow
+    # as it displays the image directly in the notebook output.
+```
+## OUTPUT
+<img width="706" height="411" alt="image" src="https://github.com/user-attachments/assets/d9af802d-c56a-4f92-8249-d1546ccaae25" />
+
